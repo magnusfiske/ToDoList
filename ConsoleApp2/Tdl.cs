@@ -8,11 +8,11 @@ namespace Listan2
 {
     class Tdl
     {
-     
+
 
         public Tdl()
         {
-            
+
         }
 
         //Metoder
@@ -21,7 +21,7 @@ namespace Listan2
             bool stay = true;
             do
             {
-                Console.WriteLine("1. Lägg till         2. Spara\n3. Avsluta");
+                Console.WriteLine("1. Lägg till         2. Ta bort\n3. Spara             4.Avsluta");
 
                 string input = Console.ReadLine();
                 switch (input)
@@ -31,13 +31,16 @@ namespace Listan2
                         Print(ts);
                         break;
                     case "2":
-                        SaveList(ts);
+                        RemoveItem(ts);
                         break;
                     case "3":
+                        SaveList(ts);
+                        break;
+                    case "4":
                         stay = false;
                         break;
                     default:
-                        Console.WriteLine("Ange '1', '2' eller '3', dumskalle!");
+                        Console.WriteLine("Ange '1', '2', '3' eller '4', dumskalle!");
                         break;
                 }
             } while (stay == true);
@@ -50,6 +53,28 @@ namespace Listan2
             Console.Write("Lägg till något till listan: ");
             string input = Console.ReadLine();
             ts.Add(input);
+        }
+
+        public static void RemoveItem(List<string> ts)
+        {
+            Console.WriteLine("Ange numret för den punkt som ska bort: ");
+            string input = Console.ReadLine();
+            int number;
+            bool rightNumber = Int32.TryParse(input, out number);
+            do
+            {
+                if (rightNumber)
+                {
+                    ts.RemoveAt(number - 1);
+                    Console.WriteLine();
+                    Print(ts);
+                }
+                else
+                {
+                    Console.WriteLine("Ange ett giltigt nummer för den punkt på listan som ska bort.");
+                    RemoveItem(ts);
+                }
+            } while (rightNumber == false);
         }
 
         public static void Print(List<string> ts)
